@@ -3,23 +3,20 @@
 properties([disableConcurrentBuilds()])
 
 pipeline {
-    agent { 
-        label 'master'
-        }
+    agent any
     options {
         buildDiscarder(logRotator(numToKeepStr: '10', artifactNumToKeepStr: '10'))
         timestamps()
     }
-    stages {
-        stage("First step") {
+    
+        stage("create docker image") {
             steps {
-                sh 'ssh root@ub1 \'hostname\''
-            }
-        }
-        stage("Second step") {
-            steps {
-                sh 'ssh root@ub1 \'uptime\''
+                echo " ============== start building image =================="
+                dir ('docker/toolbox') {
+                	sh 'docker build . '
+                }
             }
         }
     }
 }
+
