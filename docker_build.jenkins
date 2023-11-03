@@ -28,5 +28,13 @@ pipeline {
                 }
             }
         }
+        stage("create docker image") {
+            steps {
+                echo " ============== start pushing image =================="
+                sh '''
+                docker push dimchik56/toolbox:latest
+                '''
+            }
+        }
     }
 }
